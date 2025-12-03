@@ -1,0 +1,6 @@
+{
+  "appName": "smart-service-desk-backend",
+  "buildCommand": "npm install",
+  "startCommand": "npm start"
+}
+
