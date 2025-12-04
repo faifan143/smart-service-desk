@@ -22,13 +22,17 @@ if ! command -v docker &> /dev/null; then
 fi
 
 # Check if Docker Compose is installed (try both new and old syntax)
-if command -v docker compose &> /dev/null; then
-    DOCKER_COMPOSE_CMD="docker compose"
-elif command -v docker-compose &> /dev/null; then
+# Check for docker-compose (standalone) first
+if command -v docker-compose &> /dev/null; then
     DOCKER_COMPOSE_CMD="docker-compose"
+# Check for docker compose (plugin) by testing if it works
+elif docker compose version &> /dev/null 2>&1; then
+    DOCKER_COMPOSE_CMD="docker compose"
 else
     echo "❌ Error: Docker Compose is not installed!"
     echo "📦 Please install Docker Compose first"
+    echo "   Install with: sudo apt install docker-compose-plugin -y"
+    echo "   Or: sudo apt install docker-compose -y"
     exit 1
 fi
 
